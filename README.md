@@ -1,2 +1,2 @@
 # Nextjs-demoapp
-web dev starting point
+nothing to see yet
