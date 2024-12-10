@@ -32,12 +32,10 @@ export default function AuthLayout({
       >
         <BackgroundImage />
 
-        <header className="flex justify-between items-center px-8 py-4 bg-transparent relative">
-          {/* Logo */}
-          <Link href="/">
-            <h1 className="text-2xl font-bold tracking-widest text-white">PATHETIC</h1>
-          </Link>
-        </header>
+
+        <Link href="/">
+          <h1 className="absolute py-4 px-8 text-2xl font-bold tracking-widest text-white z-10">PATHETIC</h1>
+        </Link>
 
         {children}
 

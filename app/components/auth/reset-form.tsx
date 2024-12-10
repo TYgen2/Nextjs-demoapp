@@ -4,7 +4,7 @@ import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { LoginSchema } from '@/schemas';
+import { ResetSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     Form,
@@ -17,29 +17,27 @@ import {
 import FormError from './form-error';
 import FormSuccess from './form-success';
 import { useState, useTransition } from 'react';
-import { login } from '@/actions/login';
-import Link from 'next/link';
+import { reset } from '@/actions/reset';
 
-const LoginForm = () => {
+const ResetForm = () => {
 
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [isPending, startTransition] = useTransition();
 
-    const form = useForm<z.infer<typeof LoginSchema>>({
-        resolver: zodResolver(LoginSchema),
+    const form = useForm<z.infer<typeof ResetSchema>>({
+        resolver: zodResolver(ResetSchema),
         defaultValues: {
             email: "",
-            password: "",
         },
     })
 
-    const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    const onSubmit = (values: z.infer<typeof ResetSchema>) => {
         setError("");
         setSuccess("");
 
         startTransition(() => {
-            login(values).then((data) => {
+            reset(values).then((data) => {
                 setError(data.error);
                 setSuccess(data.success);
             })
@@ -63,34 +61,15 @@ const LoginForm = () => {
                     )}
                 />
 
-                <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel className='text-white'>Password</FormLabel>
-                            <FormControl>
-                                <Input {...field} className='rounded w-full h-12 text-white' type="password" />
-                            </FormControl>
-
-                            <Button variant="link" size="sm" className='px-0 underline'>
-                                <Link href="/auth/reset" className="text-blue-400 hover:text-blue-500">
-                                    Forgot password?
-                                </Link>
-                            </Button>
-
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
                 <FormError message={error} />
                 <FormSuccess message={success} />
 
-                <Button className='rounded w-full h-12 font-bold bg-black' type='submit' disabled={isPending}>Login</Button>
+                <Button className='rounded w-full h-12 font-bold bg-black' type='submit' disabled={isPending}>
+                    Send reset email
+                </Button>
             </form>
         </Form >
     )
 }
 
-export default LoginForm
+export default ResetForm
