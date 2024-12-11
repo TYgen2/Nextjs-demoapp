@@ -44,7 +44,7 @@ export const NewVerificationForm = () => {
 
             <CardContent className="flex flex-1 flex-col justify-center items-center w-full px-16 space-y-4">
                 <h2 className="text-3xl text-white font-bold tracking-widest select-none cursor-default">Verification</h2>
-                <p className="text-white text-sm">We sent you an email to verify your account. Please check your inbox.</p>
+                <p className="text-white text-sm">Confirming your verification</p>
                 {!success && !error && <BeatLoader />}
                 <FormSuccess message={success} />
                 <FormError message={error} />
