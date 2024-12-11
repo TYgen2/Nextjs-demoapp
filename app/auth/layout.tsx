@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import BackgroundImage from "./BackgroundImage";
-import AuthNavBar from "../components/auth/AuthNavBar";
+import AuthNavBar from "../../components/auth/AuthNavBar";
 
 export const metadata: Metadata = {
   title: "Auth page",
@@ -14,7 +14,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="h-full bg-black relative">
+    <div className="relative h-full bg-black">
       <BackgroundImage />
       <AuthNavBar />
       {children}

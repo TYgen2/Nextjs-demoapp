@@ -1,14 +1,14 @@
-import NavBar from "@/app/components/NavBar";
+import NavBar from "@/components/NavBar";
 
 export default function MainLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    return (
-        <>
-            <NavBar />
-            {children}
-        </>
-    );
+  return (
+    <>
+      <NavBar />
+      {children}
+    </>
+  );
 }
