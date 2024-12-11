@@ -10,7 +10,7 @@ const BackgroundImage = () => {
       quality={100}
       fill
       priority
-      className="object-cover object-top opacity-40 relative"
+      className="relative object-cover object-top opacity-40"
     />
   );
 };

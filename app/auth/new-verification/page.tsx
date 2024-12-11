@@ -1,9 +1,16 @@
-import { NewVerificationForm } from "@/app/components/auth/verification-form"
+import { CardWrapper } from "@/components/auth/card-wrapper";
+import NewVerificationForm from "@/components/auth/form/verification-form";
 
 const NewVerificationPage = () => {
-    return (
-        <NewVerificationForm />
-    )
-}
+  return (
+    <CardWrapper
+      headerLabel="Verification✨"
+      backButtonLabel="Return to login"
+      backButtonHref="/auth/login"
+    >
+      <NewVerificationForm />
+    </CardWrapper>
+  )
+};
 
-export default NewVerificationPage
+export default NewVerificationPage;

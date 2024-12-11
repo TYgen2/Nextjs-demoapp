@@ -6,10 +6,12 @@ import { signIn } from "@/auth";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
 import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken, generateTwoFactorToken } from "@/lib/tokens";
+import {
+  generateVerificationToken,
+  generateTwoFactorToken,
+} from "@/lib/tokens";
 import { sendVerificationEmail, sendTwoFactorTokenEmail } from "@/lib/mail";
 import { getTwoFactorTokenByEmail } from "@/data/two-factor-token";
-import { error } from "console";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
@@ -32,8 +34,13 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   // User registered but not verified yet, send verification email again
   // !!!!WRONG, SHOULD MODIFIED LATER
   if (!existingUser.emailVerified) {
-    const verificationToken = await generateVerificationToken(existingUser.email);
-    await sendVerificationEmail(verificationToken.email, verificationToken.token);
+    const verificationToken = await generateVerificationToken(
+      existingUser.email,
+    );
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+    );
     return { success: "Confirmation email sent!" };
   }
 
@@ -60,30 +67,31 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
         where: {
           id: twoFactorToken.id,
         },
-      })
+      });
 
-      const existingConfirmation = await getTwoFactorConfirmationByUserId(existingUser.id);
+      const existingConfirmation = await getTwoFactorConfirmationByUserId(
+        existingUser.id,
+      );
 
       if (existingConfirmation) {
         await db.twoFactorConfirmation.delete({
           where: {
             id: existingConfirmation.id,
           },
-        })
+        });
       }
 
       await db.twoFactorConfirmation.create({
         data: {
           userId: existingUser.id,
         },
-      })
+      });
     } else {
       const twoFactorToken = await generateTwoFactorToken(existingUser.email);
       await sendTwoFactorTokenEmail(twoFactorToken.email, twoFactorToken.token);
 
       return { twoFactor: true };
     }
-
   }
 
   try {

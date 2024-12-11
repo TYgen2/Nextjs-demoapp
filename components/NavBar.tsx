@@ -1,19 +1,19 @@
 import { auth } from "@/auth";
 import Link from "next/link";
-import { UserButton } from "./auth/user-button";
+import { UserButton } from "./auth/_components/user-button";
 
 const NavBar = async () => {
   const session = await auth();
 
   return (
-    <header className="flex justify-between items-center px-8 py-4 bg-green-100">
+    <header className="flex items-center justify-between bg-green-100 px-8 py-4">
       {/* Logo */}
       <Link href="/">
         <h1 className="text-2xl font-bold tracking-widest">PATHETIC</h1>
       </Link>
 
       {/* Links */}
-      <nav className="flex gap-4 items-center">
+      <nav className="flex items-center gap-4">
         {session && session?.user ? (
           <>
             <Link href="/settings">

@@ -1,40 +1,17 @@
-import LoginForm from "@/app/components/auth/login-form";
-import SocialLogin from "@/app/components/auth/social-login";
-import AnimatedCard from "@/app/components/auth/animated-card";
-import {
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import Link from "next/link";
+import LoginForm from "@/components/auth/form/login-form";
+import { CardWrapper } from "@/components/auth/card-wrapper";
 
 const LoginPage = () => {
   return (
-    <div className="flex absolute items-center justify-center h-screen w-screen overflow-hidden">
-      <AnimatedCard>
-        {/* Header */}
-        <CardHeader className="flex text-center pt-16 pb-8">
-          <CardTitle className="text-5xl text-white font-bold tracking-widest select-none cursor-default">PATHETIC</CardTitle>
-          <CardDescription className="select-none cursor-default">Welcome✨Please login in</CardDescription>
-        </CardHeader>
-
-        {/* Login input */}
-        <CardContent className="flex flex-1 flex-col justify-center items-center w-full px-16 space-y-4">
-          <LoginForm />
-          <SocialLogin />
-        </CardContent>
-
-        {/* Go to register */}
-        <CardFooter className="flex py-8 select-none">
-          <Link href="/auth/register" className="underline text-sm text-gray-400">
-            Don't have an account? Register
-          </Link>
-        </CardFooter>
-      </AnimatedCard>
-    </div>
-  )
+    <CardWrapper
+      headerLabel="Welcome✨Please login in"
+      backButtonLabel="Don't have an account? Register"
+      backButtonHref="/auth/register"
+      showSocial
+    >
+      <LoginForm />
+    </CardWrapper>
+  );
 };
 
 export default LoginPage;
