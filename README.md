@@ -6,4 +6,4 @@ The final goal for this repo is to build a full-stack e-Commerce web app.
 Still under development.
 
 ## 📷Screenshots from app
-<img src="https://github.com/user-attachments/assets/fc292f96-6ea7-49f8-bb7c-c9c95d454ae6"/>
+<img src="https://github.com/user-attachments/assets/bc175717-cd2d-43ac-81ab-e7a395e75b6d"/>
