@@ -17,7 +17,7 @@ import {
 import FormError from "../form-message/form-error";
 import FormSuccess from "../form-message/form-success";
 import { reset } from "@/actions/reset";
-import useAuthForm from "@/hooks/use-auth-form";
+import useFormState from "@/hooks/use-form";
 import useCooldown from "@/hooks/use-cooldown";
 import { BeatLoader } from "react-spinners";
 
@@ -30,10 +30,10 @@ const ResetForm = () => {
     isPending,
     startTransition,
     resetMessages,
-  } = useAuthForm();
+  } = useFormState();
 
   const { isInCooldown, remainingTime, startCooldown } = useCooldown({
-    duration: 60
+    duration: 60,
   });
 
   const form = useForm<z.infer<typeof ResetSchema>>({
@@ -91,7 +91,9 @@ const ResetForm = () => {
           {isPending ? (
             <BeatLoader size={8} color="white" />
           ) : isInCooldown ? (
-            <span className="text-gray-400">(Resend after {remainingTime} seconds)</span>
+            <span className="text-gray-400">
+              (Resend after {remainingTime} seconds)
+            </span>
           ) : (
             "Send password reset link"
           )}

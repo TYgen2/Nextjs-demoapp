@@ -17,7 +17,7 @@ import {
 import FormError from "../form-message/form-error";
 import FormSuccess from "../form-message/form-success";
 import { register } from "@/actions/register";
-import useAuthForm from "@/hooks/use-auth-form";
+import useFormState from "@/hooks/use-form";
 
 const RegisterForm = () => {
   const {
@@ -28,7 +28,7 @@ const RegisterForm = () => {
     isPending,
     startTransition,
     resetMessages,
-  } = useAuthForm();
+  } = useFormState();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
