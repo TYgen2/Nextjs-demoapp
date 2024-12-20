@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SettingSchema } from "@/schemas";
-import useAuthForm from "@/hooks/use-auth-form";
+import useAuthForm from "@/hooks/use-form";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import FormError from "@/components/auth/form-message/form-error";
 import FormSuccess from "@/components/auth/form-message/form-success";
@@ -73,7 +73,7 @@ const SettingPage = () => {
   };
 
   return (
-    <Card className="w-[600px]">
+    <Card className="h-[600px] w-[600px]">
       <CardHeader>
         <p className="text-center text-2xl font-semibold">Settings</p>
       </CardHeader>

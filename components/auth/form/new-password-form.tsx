@@ -17,7 +17,7 @@ import {
 import FormError from "../form-message/form-error";
 import FormSuccess from "../form-message/form-success";
 import { newPassword } from "@/actions/new-password";
-import useAuthForm from "@/hooks/use-auth-form";
+import useFormState from "@/hooks/use-form";
 import useTokenParams from "@/hooks/use-token-params";
 import { BeatLoader } from "react-spinners";
 
@@ -32,7 +32,7 @@ const NewPasswordForm = () => {
     isPending,
     startTransition,
     resetMessages,
-  } = useAuthForm();
+  } = useFormState();
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
@@ -79,15 +79,19 @@ const NewPasswordForm = () => {
         <FormError message={error} />
         <FormSuccess message={success} />
 
-        {!success && <Button
-          className="h-12 w-full rounded bg-black font-bold"
-          type="submit"
-          disabled={isPending}
-        >
-          {isPending ?
-            <BeatLoader className="mr-2" size={8} color="white" /> :
-            <span className="text-white">Reset password</span>}
-        </Button>}
+        {!success && (
+          <Button
+            className="h-12 w-full rounded bg-black font-bold"
+            type="submit"
+            disabled={isPending}
+          >
+            {isPending ? (
+              <BeatLoader className="mr-2" size={8} color="white" />
+            ) : (
+              <span className="text-white">Reset password</span>
+            )}
+          </Button>
+        )}
       </form>
     </Form>
   );

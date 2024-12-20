@@ -5,18 +5,13 @@ import { useCallback, useEffect } from "react";
 import { BeatLoader } from "react-spinners";
 import FormSuccess from "../form-message/form-success";
 import FormError from "../form-message/form-error";
-import useAuthForm from "@/hooks/use-auth-form";
+import useFormState from "@/hooks/use-form";
 import useTokenParams from "@/hooks/use-token-params";
 
 const NewVerificationForm = () => {
   const { token } = useTokenParams();
 
-  const {
-    error,
-    setError,
-    success,
-    setSuccess,
-  } = useAuthForm();
+  const { error, setError, success, setSuccess } = useFormState();
 
   const onSubmit = useCallback(() => {
     if (success || error) return;
@@ -42,7 +37,9 @@ const NewVerificationForm = () => {
 
   return (
     <>
-      <span className="text-xl font-bold text-white">Confirming your verification</span>
+      <span className="text-xl font-bold text-white">
+        Confirming your verification
+      </span>
       {!success && !error && <BeatLoader />}
       <FormSuccess message={success} />
       <FormError message={error} />

@@ -12,6 +12,11 @@ enum UserRole {
   PROVIDER
 }
 
+enum ProductOrientation {
+  HORIZONTAL
+  PORTRAIT
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -77,4 +82,15 @@ model TwoFactorConfirmation {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId])
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  userId      String
+  name        String
+  description String
+  price       Float
+  imageUrl    String
+  orientation ProductOrientation
+  createdAt   DateTime @default(now())
 }

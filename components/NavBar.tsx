@@ -1,44 +1,75 @@
-import { auth } from "@/auth";
+"use client";
+
 import Link from "next/link";
 import { UserButton } from "./auth/_components/user-button";
+import { Button } from "./ui/button";
+import { useCurrentUser } from "@/hooks/use-current-user";
+import SettingsIcon from "@mui/icons-material/Settings";
+import DashboardIcon from "@mui/icons-material/Dashboard";
 
-const NavBar = async () => {
-  const session = await auth();
+const NavBar = () => {
+  const user = useCurrentUser();
 
   return (
-    <header className="flex items-center justify-between bg-green-100 px-8 py-4">
-      {/* Logo */}
-      <Link href="/">
-        <h1 className="text-2xl font-bold tracking-widest">PATHETIC</h1>
+    <nav className="sticky top-0 flex h-20 items-center justify-between bg-black px-8">
+      <Link
+        href="/"
+        className="text-2xl font-bold tracking-widest text-white transition-all hover:scale-110"
+      >
+        PATHETIC
       </Link>
 
-      {/* Links */}
-      <nav className="flex items-center gap-4">
-        {session && session?.user ? (
+      <div className="flex items-center">
+        {user ? (
           <>
-            <Link href="/settings">
-              <span>Setting</span>
+            <Link
+              href="/settings"
+              className="flex h-20 items-center justify-center gap-1 px-4 text-xl text-white transition-all hover:bg-gradient-to-b hover:from-slate-900 hover:to-slate-700"
+            >
+              <SettingsIcon />
+              Settings
             </Link>
 
-            <Link href="/admin">
-              <span>Admin</span>
+            <Link
+              href="/admin"
+              className="flex h-20 items-center justify-center gap-1 px-4 text-xl text-white transition-all hover:bg-gradient-to-b hover:from-slate-900 hover:to-slate-700"
+            >
+              Admin
             </Link>
 
-            <Link href="/server">
-              <span>Server</span>
+            <Link
+              href="/server"
+              className="flex h-20 items-center justify-center gap-1 px-4 text-xl text-white transition-all hover:bg-gradient-to-b hover:from-slate-900 hover:to-slate-700"
+            >
+              Server
             </Link>
 
-            <Link href="/client">
-              <span>Client</span>
+            <Link
+              href="/client"
+              className="flex h-20 items-center justify-center gap-1 px-4 text-xl text-white transition-all hover:bg-gradient-to-b hover:from-slate-900 hover:to-slate-700"
+            >
+              Client
+            </Link>
+
+            <Link
+              href="/dashboard"
+              className="flex h-20 items-center justify-center gap-1 px-4 text-xl text-white transition-all hover:bg-gradient-to-b hover:from-slate-900 hover:to-slate-700"
+            >
+              <DashboardIcon />
+              Dashboard
             </Link>
 
             <UserButton />
           </>
         ) : (
-          <Link href="/auth/login">Login</Link>
+          <Link href="/auth/login">
+            <Button type="button" className="shadow-none">
+              <span className="font-bold text-white">Login</span>
+            </Button>
+          </Link>
         )}
-      </nav>
-    </header>
+      </div>
+    </nav>
   );
 };
 

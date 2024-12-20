@@ -19,7 +19,7 @@ import FormSuccess from "../form-message/form-success";
 import { useState } from "react";
 import { login } from "@/actions/login";
 import Link from "next/link";
-import useAuthForm from "@/hooks/use-auth-form";
+import useFormState from "@/hooks/use-form";
 import useTokenParams from "@/hooks/use-token-params";
 
 const LoginForm = () => {
@@ -34,7 +34,7 @@ const LoginForm = () => {
     isPending,
     startTransition,
     resetMessages,
-  } = useAuthForm();
+  } = useFormState();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
