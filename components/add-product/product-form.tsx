@@ -75,8 +75,8 @@ const ProductForm = () => {
 
         router.push(
           "/dashboard/add-product/success-submission" +
-            "?" +
-            createQueryString("productDetails", productDetails),
+          "?" +
+          createQueryString("productDetails", productDetails),
         );
       }
     } catch (error) {
