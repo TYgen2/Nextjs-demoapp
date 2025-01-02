@@ -4,6 +4,7 @@ import "./globals.css";
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/session-provider";
+import QueryProvider from "@/providers/query-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,12 +32,14 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} flex h-screen flex-col antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider session={session}>
-          <Toaster />
-          {children}
-        </AuthProvider>
+        <QueryProvider>
+          <AuthProvider session={session}>
+            <Toaster />
+            {children}
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

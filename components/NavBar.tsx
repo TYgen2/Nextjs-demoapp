@@ -11,7 +11,7 @@ const NavBar = () => {
   const user = useCurrentUser();
 
   return (
-    <nav className="sticky top-0 flex h-20 items-center justify-between bg-black px-8">
+    <nav className="sticky top-0 flex h-20 items-center justify-between bg-black px-8 z-10">
       <Link
         href="/"
         className="text-2xl font-bold tracking-widest text-white transition-all hover:scale-110"

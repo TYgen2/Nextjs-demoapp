@@ -2,7 +2,7 @@ import { getMyProduct } from "@/actions/getProduct";
 import { currentUser } from "@/lib/auth";
 import { Card } from "../ui/card";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Avatar, AvatarImage } from "../ui/avatar";
 
 const MyProduct = async () => {
     const products = await getMyProduct();
@@ -28,7 +28,6 @@ const MyProduct = async () => {
                     <div className="flex-1 justify-start flex items-start mx-4">
                         <Avatar>
                             <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
-                            <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
                         </Avatar>
                         <div className="flex justify-center flex-col items-start ml-2">
                             <p className="font-bold">{product.name}</p>

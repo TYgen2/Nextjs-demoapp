@@ -6,9 +6,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex h-screen flex-col overflow-hidden">
+    <div className="h-screen overflow-hidden">
       <NavBar />
-      <div className="flex flex-1 items-center justify-center">{children}</div>
+      <main className="h-[calc(100vh-80px)]">
+        {children}
+      </main>
     </div>
   );
 }

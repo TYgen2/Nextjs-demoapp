@@ -62,7 +62,8 @@ export const getSignedURL = async (
       description: content.description,
       price: content.price,
       imageUrl: signedURL.split("?")[0],
-      orientation: content.orientation,
+      width: content.width,
+      height: content.height
     },
   });
 

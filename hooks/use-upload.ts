@@ -12,7 +12,7 @@ export const useUpload = () => {
   const setPreviewUrl = useUploadStore((state) => state.setPreviewUrl);
 
   const handleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
       const selectedFile = e.target.files?.[0];
       setFile(selectedFile);
 

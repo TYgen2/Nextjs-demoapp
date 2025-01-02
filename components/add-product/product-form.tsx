@@ -15,15 +15,15 @@ import {
 } from "@/components/ui/form";
 import useFormState from "@/hooks/use-form";
 import { ProductSchema } from "@/schemas";
-import { ProductOrientation } from "@prisma/client";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { computeSHA256 } from "@/utils/helper";
 import { getSignedURL } from "@/actions/uploadS3";
 import { useUploadStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { ProductReturnFromDB } from "@/types/product";
+import { useQueryClient } from "@tanstack/react-query";
 
 const ProductForm = () => {
+  const queryClient = useQueryClient();
   const {
     error,
     setError,
@@ -50,11 +50,26 @@ const ProductForm = () => {
     try {
       if (file) {
         const checksum = await computeSHA256(file);
+
+        // Get image dimensions before upload
+        const dimensions = await new Promise<{ width: number; height: number }>((resolve, reject) => {
+          const img = new Image();
+          img.src = URL.createObjectURL(file);
+          img.onload = () => {
+            URL.revokeObjectURL(img.src);
+            resolve({ width: img.width, height: img.height });
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(img.src);
+            reject(new Error("Failed to load image"));
+          };
+        });
+
         const signedURLResult = await getSignedURL(
           file.type,
           file.size,
           checksum,
-          values,
+          { ...values, width: dimensions.width, height: dimensions.height },
         );
 
         if (signedURLResult.failure !== undefined) {
@@ -73,6 +88,8 @@ const ProductForm = () => {
         setFile(undefined);
         setPreviewUrl(undefined);
 
+        await queryClient.invalidateQueries({ queryKey: ["products"] });
+
         router.push(
           "/dashboard/add-product/success-submission" +
           "?" +
@@ -90,7 +107,8 @@ const ProductForm = () => {
       name: "",
       description: "",
       price: 0,
-      orientation: ProductOrientation.HORIZONTAL,
+      width: 0,
+      height: 0
     },
   });
 
@@ -151,37 +169,6 @@ const ProductForm = () => {
                   className="h-12 w-full rounded"
                   type="number"
                 />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="orientation"
-          render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel className="text-md font-bold">Orientation</FormLabel>
-              <FormControl>
-                <RadioGroup
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                  className="flex flex-col space-y-1"
-                >
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="HORIZONTAL" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Horizontal</FormLabel>
-                  </FormItem>
-                  <FormItem className="flex items-center space-x-3 space-y-0">
-                    <FormControl>
-                      <RadioGroupItem value="PORTRAIT" />
-                    </FormControl>
-                    <FormLabel className="font-normal">Portrait</FormLabel>
-                  </FormItem>
-                </RadioGroup>
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -24,3 +24,37 @@ export const getMyProduct = async () => {
 
     revalidatePath("/dashboard");
 }
+
+export const getRecentProduct = async () => {
+    const user = await currentUser();
+    if (!user) {
+        console.log("You have not signed in yet.");
+        return null;
+    }
+
+    try {
+        const products = await db.product.findMany({
+            orderBy: {
+                createdAt: "desc",
+            },
+            include: {
+                user: {
+                    select: {
+                        image: true
+                    }
+                }
+            }
+        });
+
+        const productsWithUserIcon = products.map(product => ({
+            ...product,
+            userIcon: user.image
+        }));
+
+        return productsWithUserIcon;
+    } catch (error) {
+        console.log(error);
+    }
+
+    revalidatePath("/");
+}
