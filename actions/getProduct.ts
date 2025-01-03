@@ -26,12 +26,6 @@ export const getMyProduct = async () => {
 }
 
 export const getRecentProduct = async () => {
-    const user = await currentUser();
-    if (!user) {
-        console.log("You have not signed in yet.");
-        return null;
-    }
-
     try {
         const products = await db.product.findMany({
             orderBy: {
@@ -48,7 +42,7 @@ export const getRecentProduct = async () => {
 
         const productsWithUserIcon = products.map(product => ({
             ...product,
-            userIcon: user.image
+            userIcon: product.user?.image || null
         }));
 
         return productsWithUserIcon;

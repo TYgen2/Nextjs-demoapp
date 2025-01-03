@@ -8,7 +8,7 @@ const DashboardHeader = async () => {
     const user = await currentUser();
 
     return (
-        <div className="flex h-20 items-center justify-center px-8">
+        <div className="flex h-20 items-center justify-center px-8 select-none">
             <Avatar className="mr-2">
                 <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
                 <AvatarFallback className="bg-slate-400">CN</AvatarFallback>

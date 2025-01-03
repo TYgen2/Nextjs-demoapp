@@ -1,34 +1,31 @@
 'use client';
 
-import { getRecentProduct } from "@/actions/getProduct";
 import Image from "next/image";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import Masonry from 'react-masonry-css';
-import { useQuery } from "@tanstack/react-query";
+import { motion } from "framer-motion";
+import { ProductReturnFromDB } from "@/types/product";
 
-interface Product {
-    id: string;
-    name: string;
-    userId: string;
-    description: string;
-    price: number;
-    imageUrl: string;
-    createdAt: Date;
-    user: {
-        image: string | null;
-    };
-    userIcon?: string | null;
+const ContainerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15
+        }
+    }
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, },
+    visible: { opacity: 1, }
+};
+
+interface MasonryGridProps {
+    products: ProductReturnFromDB[];
 }
 
-const MasonryGrid = () => {
-    const { data: products = [], isLoading } = useQuery<Product[]>({
-        queryKey: ['products'],
-        queryFn: async () => {
-            const data = await getRecentProduct();
-            return data ?? [];
-        }
-    });
-
+const MasonryGrid = ({ products }: MasonryGridProps) => {
     const breakpointColumns = {
         default: 5,
         1280: 4, // xl
@@ -38,20 +35,21 @@ const MasonryGrid = () => {
     };
 
     return (
-        <Masonry
-            breakpointCols={breakpointColumns}
-            className="flex w-full gap-4 p-4 bg-blue-100"
-            columnClassName="space-y-4 flex flex-col"
-        >
-            {products?.map((product) => (
-                <div key={product.id} className="break-inside-avoid cursor-pointer relative">
-                    <div className="relative aspect-auto w-full">
+        <motion.div initial="hidden" animate="visible" variants={ContainerVariants}>
+            <Masonry
+                breakpointCols={breakpointColumns}
+                className="flex w-full gap-4 p-4"
+                columnClassName="space-y-4 flex flex-col"
+            >
+                {products?.map((product) => (
+                    <motion.div key={product.id} className="relative aspect-auto w-full transition-all hover:scale-105
+                 break-inside-avoid cursor-pointer" variants={itemVariants}>
                         <Image
                             src={product.imageUrl}
                             alt={product.name || 'Product image'}
-                            width={500}
-                            height={500}
-                            className="w-full h-auto object-cover rounded-lg"
+                            width={product.width}
+                            height={product.height}
+                            className="w-full h-auto object-cover rounded-lg hover:opacity-90 transition-all"
                             sizes="(max-width: 640px) 100vw, 
                                    (max-width: 768px) 50vw, 
                                    (max-width: 1024px) 33vw,
@@ -65,15 +63,16 @@ const MasonryGrid = () => {
                                 <AvatarImage src={product.userIcon || "https://github.com/shadcn.png"} />
                             </Avatar>
                             <div className="flex flex-col ml-2">
-                                <h3 className="text-white font-semibold text-lg">{product.name}</h3>
-                                <p className="text-white/80 text-sm">{product.description}</p>
+                                <h3 className="text-white font-semibold text-lg select-none">{product.name}</h3>
+                                <p className="text-white/80 text-sm select-none">{product.description}</p>
                             </div>
-                            <p className="text-white/90 font-bold ml-auto mt-auto">${product.price}</p>
+                            <p className="text-white/90 font-bold ml-auto mt-auto select-none">${product.price}</p>
                         </div>
-                    </div>
-                </div>
-            ))}
-        </Masonry>
+                    </motion.div>
+                ))}
+            </Masonry>
+        </motion.div>
+
     )
 }
 

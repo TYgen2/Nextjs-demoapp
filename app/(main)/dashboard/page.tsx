@@ -7,7 +7,7 @@ const DashboardPage = async () => {
   if (!user) return <div>Not signed in</div>;
 
   return (
-    <div className="flex h-screen w-screen flex-col">
+    <div className="h-full overflow-auto">
       <DashboardHeader />
       <MyProduct />
     </div>

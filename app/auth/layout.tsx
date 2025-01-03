@@ -14,7 +14,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="relative h-full bg-black">
+    <div className="absolute h-full w-full bg-black">
       <BackgroundImage />
       <AuthNavBar />
       {children}

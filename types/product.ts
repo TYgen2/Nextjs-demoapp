@@ -8,4 +8,8 @@ export type ProductReturnFromDB = {
   createdAt: Date;
   width: number;
   height: number;
+  user: {
+    image: string | null;
+  };
+  userIcon?: string | null;
 };

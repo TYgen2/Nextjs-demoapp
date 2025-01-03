@@ -15,17 +15,17 @@ const MyProduct = async () => {
                     key={product.id}
                     className="w-[250px] h-[350px] rounded-2xl shadow-xl shadow-blue-200 flex flex-col"
                 >
-                    <div className="h-[280px] w-full relative">
+                    <div className="h-[280px] aspect-auto w-full">
                         <Image
                             src={product.imageUrl}
                             alt={product.name}
-                            fill
-                            objectFit="contain"
-                            className="p-4"
+                            width={product.width}
+                            height={product.height}
+                            className="w-full h-full object-contain p-2"
                         />
                     </div>
 
-                    <div className="flex-1 justify-start flex items-start mx-4">
+                    <div className="flex-1 justify-start flex items-center w-full px-2 select-none">
                         <Avatar>
                             <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
                         </Avatar>
