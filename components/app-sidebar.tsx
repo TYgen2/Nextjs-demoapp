@@ -10,12 +10,14 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { currentUser } from "@/lib/auth";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 // Menu items.
 const items = [
     {
         title: "Home",
-        url: "#",
+        url: "/dashboard",
         icon: Home,
     },
     {
@@ -40,14 +42,21 @@ const items = [
     },
 ]
 
-export function AppSidebar() {
-
+export async function AppSidebar() {
+    const user = await currentUser();
+    if (!user) return null;
 
     return (
-        <Sidebar collapsible="offcanvas" className="mt-20 border-none shadow-xl">
-            <SidebarContent>
+        <Sidebar className="mt-20">
+            <SidebarContent className="bg-blue-100">
                 <SidebarGroup>
-                    <SidebarGroupLabel className="text-xl font-bold text-black">Dashboard</SidebarGroupLabel>
+                    <SidebarGroupLabel className="h-16">
+                        <Avatar className="mr-2">
+                            <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
+                            <AvatarFallback className="bg-slate-400">CN</AvatarFallback>
+                        </Avatar>
+                        <span className="font-bold text-black text-base">{user.name}'s Dashboard</span>
+                    </SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {items.map((item) => (

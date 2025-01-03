@@ -5,6 +5,8 @@ import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/session-provider";
 import QueryProvider from "@/providers/query-provider";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/app-sidebar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,12 +36,15 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <QueryProvider>
-          <AuthProvider session={session}>
-            <Toaster />
-            {children}
-          </AuthProvider>
-        </QueryProvider>
+        <SidebarProvider>
+          <QueryProvider>
+            <AuthProvider session={session}>
+              <Toaster />
+              {children}
+            </AuthProvider>
+          </QueryProvider>
+        </SidebarProvider>
+
       </body>
     </html>
   );

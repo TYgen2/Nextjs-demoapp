@@ -15,13 +15,14 @@ const MyProduct = async () => {
                     key={product.id}
                     className="w-[250px] h-[350px] rounded-2xl shadow-xl shadow-blue-200 flex flex-col"
                 >
-                    <div className="h-[280px] aspect-auto w-full">
+                    <div className="h-[280px] relative flex items-center justify-center">
                         <Image
                             src={product.imageUrl}
                             alt={product.name}
                             width={product.width}
                             height={product.height}
-                            className="w-full h-full object-contain p-2"
+                            className="object-contain max-h-[280px] w-auto p-2"
+                            priority={true}
                         />
                     </div>
 
