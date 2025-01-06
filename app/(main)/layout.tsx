@@ -6,7 +6,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden w-screen">
       <NavBar />
       <main className="h-[calc(100vh-80px)]">
         {children}

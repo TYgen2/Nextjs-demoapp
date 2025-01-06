@@ -52,7 +52,7 @@ const NavBar = () => {
             </Link>
 
             <Link
-              href="/dashboard"
+              href="/dashboard/my-product"
               className="flex h-20 items-center justify-center gap-1 px-4 text-xl text-white transition-all hover:bg-gradient-to-b hover:from-slate-900 hover:to-slate-700"
             >
               <DashboardIcon />

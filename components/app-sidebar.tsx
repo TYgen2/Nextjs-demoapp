@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Calendar, Home, Search, Settings } from "lucide-react"
 
 import {
     Sidebar,
@@ -12,18 +12,19 @@ import {
 } from "@/components/ui/sidebar"
 import { currentUser } from "@/lib/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import AutoGraphIcon from '@mui/icons-material/AutoGraph';
 
 // Menu items.
 const items = [
     {
-        title: "Home",
-        url: "/dashboard",
+        title: "My products",
+        url: "/dashboard/my-product",
         icon: Home,
     },
     {
-        title: "Inbox",
-        url: "#",
-        icon: Inbox,
+        title: "Analytics",
+        url: "/dashboard/analytics",
+        icon: AutoGraphIcon,
     },
     {
         title: "Calendar",

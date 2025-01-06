@@ -1,13 +1,14 @@
-import { getMyProduct } from "@/actions/getProduct";
-import { currentUser } from "@/lib/auth";
 import { Card } from "../ui/card";
 import Image from "next/image";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import { MyProductReturnFromDB } from "@/types/product";
 
-const MyProduct = async () => {
-    const products = await getMyProduct();
-    const user = await currentUser();
+interface MyProductProps {
+    products: MyProductReturnFromDB[];
+    userIcon: string | undefined;
+}
 
+const MyProduct = ({ products, userIcon }: MyProductProps) => {
     return (
         <div className="flex-1 flex flex-wrap gap-4 ml-4">
             {products?.map((product) => (
@@ -28,7 +29,7 @@ const MyProduct = async () => {
 
                     <div className="flex-1 justify-start flex items-center w-full px-2 select-none">
                         <Avatar>
-                            <AvatarImage src={user?.image || "https://github.com/shadcn.png"} />
+                            <AvatarImage src={userIcon || "https://github.com/shadcn.png"} />
                         </Avatar>
                         <div className="flex justify-center flex-col items-start ml-2">
                             <p className="font-bold">{product.name}</p>
