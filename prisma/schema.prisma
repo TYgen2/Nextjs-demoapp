@@ -24,6 +24,7 @@ model User {
   products      Product[]
   isTwoFactorEnabled Boolean @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
+  transactions  Transaction[]
 }
 
 model Account {
@@ -91,4 +92,16 @@ model Product {
   height      Int
   createdAt   DateTime @default(now())
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  productId   String
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  quantity    Int
+  totalPrice  Float
+  createdAt   DateTime @default(now())
 }

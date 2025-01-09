@@ -5,8 +5,7 @@ import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
 import { AuthProvider } from "@/providers/session-provider";
 import QueryProvider from "@/providers/query-provider";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",

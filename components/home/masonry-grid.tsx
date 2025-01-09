@@ -5,6 +5,7 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import Masonry from 'react-masonry-css';
 import { motion } from "framer-motion";
 import { ProductReturnFromDB } from "@/types/product";
+import Link from "next/link";
 
 const ContainerVariants = {
     hidden: { opacity: 0 },
@@ -44,30 +45,32 @@ const MasonryGrid = ({ products }: MasonryGridProps) => {
                 {products?.map((product) => (
                     <motion.div key={product.id} className="relative aspect-auto w-full transition-all hover:scale-105
                  break-inside-avoid cursor-pointer" variants={itemVariants}>
-                        <Image
-                            src={product.imageUrl}
-                            alt={product.name || 'Product image'}
-                            width={product.width}
-                            height={product.height}
-                            className="w-full h-auto object-cover rounded-lg hover:opacity-90 transition-all"
-                            sizes="(max-width: 640px) 100vw, 
+                        <Link href={`/product/${product.id}`}>
+                            <Image
+                                src={product.imageUrl}
+                                alt={product.name || 'Product image'}
+                                width={product.width}
+                                height={product.height}
+                                className="w-full h-auto object-cover rounded-lg hover:opacity-90 transition-all"
+                                sizes="(max-width: 640px) 100vw, 
                                    (max-width: 768px) 50vw, 
                                    (max-width: 1024px) 33vw,
                                    25vw"
-                        />
+                            />
 
-                        {/* Overlay with product information */}
-                        <div className="absolute bottom-0 left-0 right-0 flex justify-start items-center
+                            {/* Overlay with product information */}
+                            <div className="absolute bottom-0 left-0 right-0 flex justify-start items-center
                             p-4 bg-gradient-to-b from-black/0 to-black/100 rounded-b-lg">
-                            <Avatar>
-                                <AvatarImage src={product.userIcon || "https://github.com/shadcn.png"} />
-                            </Avatar>
-                            <div className="flex flex-col ml-2">
-                                <h3 className="text-white font-semibold text-lg select-none">{product.name}</h3>
-                                <p className="text-white/80 text-sm select-none">{product.description}</p>
+                                <Avatar>
+                                    <AvatarImage src={product.userIcon || "https://github.com/shadcn.png"} />
+                                </Avatar>
+                                <div className="flex flex-col ml-2">
+                                    <h3 className="text-white font-semibold text-lg select-none">{product.name}</h3>
+                                    <p className="text-white/80 text-sm select-none">{product.description}</p>
+                                </div>
+                                <p className="text-white/90 font-bold ml-auto mt-auto select-none">${product.price}</p>
                             </div>
-                            <p className="text-white/90 font-bold ml-auto mt-auto select-none">${product.price}</p>
-                        </div>
+                        </Link>
                     </motion.div>
                 ))}
             </Masonry>

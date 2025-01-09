@@ -70,3 +70,8 @@ export const ProductSchema = z.object({
   width: z.number(),
   height: z.number()
 });
+
+export const TransactionSchema = z.object({
+  productId: z.string(),
+  quantity: z.number().int().positive()
+});
